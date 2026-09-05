@@ -22,14 +22,22 @@
       --border-gold: 1px solid rgba(212, 175, 55, 0.4);
     }
 
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
-    html { font-size: clamp(18px, 4.5vw, 22px); }
+    html {
+      font-size: clamp(18px, 4.5vw, 22px);
+    }
 
     body {
       font-family: 'Shippori Mincho', 'Hiragino Mincho ProN', serif;
       background-color: var(--bg-color);
-      background-image: radial-gradient(circle at 50% 30%, #221d10 0%, #0d0d0d 80%);
+      background-image: radial-gradient(
+        circle at 50% 30%,
+        #221d10 0%,
+        #0d0d0d 80%
+      );
       color: var(--text-color);
       margin: 0;
       padding: clamp(10px, 3vw, 24px);
@@ -47,7 +55,9 @@
       border: var(--border-gold);
       border-radius: 12px;
       padding: clamp(16px, 4vw, 32px);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.8), 0 0 15px rgba(212, 175, 55, 0.15);
+      box-shadow:
+        0 10px 30px rgba(0,0,0,0.8),
+        0 0 15px rgba(212, 175, 55, 0.15);
     }
 
     .title-area {
@@ -61,7 +71,9 @@
       font-size: clamp(1.8rem, 6vw, 2.6rem);
       margin: 0;
       color: var(--gold-main);
-      text-shadow: 0 2px 4px rgba(0,0,0,0.8), 0 0 10px rgba(212, 175, 55, 0.3);
+      text-shadow:
+        0 2px 4px rgba(0,0,0,0.8),
+        0 0 10px rgba(212, 175, 55, 0.3);
       letter-spacing: 0.08em;
     }
 
@@ -100,7 +112,8 @@
       font-weight: bold;
     }
 
-    input[type="text"], select {
+    input[type="text"],
+    select {
       width: 100%;
       padding: clamp(12px, 3vw, 16px);
       border-radius: 8px;
@@ -114,7 +127,11 @@
 
     button {
       width: 100%;
-      background: linear-gradient(135deg, #d4af37 0%, #aa771c 100%);
+      background: linear-gradient(
+        135deg,
+        #d4af37 0%,
+        #aa771c 100%
+      );
       color: #000;
       border: none;
       padding: clamp(14px, 3.5vw, 18px);
@@ -185,12 +202,19 @@
 
     .action-btn-group {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      grid-template-columns: repeat(
+        auto-fit,
+        minmax(240px, 1fr)
+      );
       gap: 12px;
     }
 
     .action-btn-group button {
-      background: linear-gradient(135deg, #3a3a3a 0%, #222 100%);
+      background: linear-gradient(
+        135deg,
+        #3a3a3a 0%,
+        #222 100%
+      );
       color: var(--gold-light);
       border: 1px solid var(--gold-dark);
       margin: 0;
@@ -265,46 +289,80 @@
     }
   </style>
 </head>
+
 <body>
 
 <div class="main-container">
 
   <div class="title-area">
     <h1>🕵️ インサイダーゲーム</h1>
-    <div class="subtitle">— ONLINE SECRET DEDUCTION GAME —</div>
+    <div class="subtitle">
+      — ONLINE SECRET DEDUCTION GAME —
+    </div>
   </div>
 
   <!-- ロビー画面 -->
   <div id="screen-lobby">
+
     <div class="card">
-      <div class="card-header">👤 プレイヤー情報の入力</div>
+
+      <div class="card-header">
+        👤 プレイヤー情報の入力
+      </div>
 
       <label>あなたのプレイヤー名</label>
-      <input type="text" id="input-name" placeholder="例: 名探偵">
+
+      <input
+        type="text"
+        id="input-name"
+        placeholder="例: 名探偵"
+      >
 
       <label>合言葉（部屋名）</label>
-      <input type="text" id="input-room-code" placeholder="例: room123">
+
+      <input
+        type="text"
+        id="input-room-code"
+        placeholder="例: room123"
+      >
 
       <div style="display: flex; gap: 8px; margin-top: 8px;">
-        <button id="btn-create" onclick="joinAsHost()">部屋を作る (ホスト)</button>
+
+        <button
+          id="btn-create"
+          onclick="joinAsHost()"
+        >
+          部屋を作る (ホスト)
+        </button>
 
         <button
           id="btn-join"
           onclick="joinAsGuest()"
-          style="background: linear-gradient(135deg, #555 0%, #333 100%); color:#fff;"
+          style="
+            background: linear-gradient(135deg, #555 0%, #333 100%);
+            color:#fff;
+          "
         >
           部屋に入る (ゲスト)
         </button>
+
       </div>
+
     </div>
+
   </div>
 
   <!-- 待機室 -->
-  <div id="screen-room" style="display:none;">
+  <div
+    id="screen-room"
+    style="display:none;"
+  >
 
     <div class="card">
+
       <div class="card-header">
-        🏰 参加待機ルーム (<span id="room-name-display">---</span>)
+        🏰 参加待機ルーム
+        (<span id="room-name-display">---</span>)
       </div>
 
       <div style="margin-bottom: 10px; font-weight: bold;">
@@ -313,41 +371,82 @@
 
       <div
         id="player-list"
-        style="display: flex; flex-wrap: wrap; gap: 4px;"
+        style="
+          display: flex;
+          flex-wrap: wrap;
+          gap: 4px;
+        "
       ></div>
+
     </div>
 
-    <div id="host-panel" style="display:none;" class="card">
+    <div
+      id="host-panel"
+      style="display:none;"
+      class="card"
+    >
 
-      <div class="card-header">👑 ホスト設定</div>
+      <div class="card-header">
+        👑 ホスト設定
+      </div>
 
       <label>質問フェイズの時間制限</label>
 
       <select id="select-question-time">
-        <option value="180">3分</option>
-        <option value="300" selected>5分</option>
-        <option value="420">7分</option>
+
+        <option value="180">
+          3分
+        </option>
+
+        <option value="300" selected>
+          5分
+        </option>
+
+        <option value="420">
+          7分
+        </option>
+
       </select>
 
       <label>議論フェイズの時間制限</label>
 
       <select id="select-discussion-time">
-        <option value="120">2分</option>
-        <option value="180" selected>3分</option>
-        <option value="300">5分</option>
+
+        <option value="120">
+          2分
+        </option>
+
+        <option value="180" selected>
+          3分
+        </option>
+
+        <option value="300">
+          5分
+        </option>
+
       </select>
 
-      <button id="btn-start" onclick="startGame()">
+      <button
+        id="btn-start"
+        onclick="startGame()"
+      >
         ゲームを開始する (3人〜8人)
       </button>
 
     </div>
+
   </div>
 
   <!-- 役職確認画面 -->
-  <div id="screen-confirm" style="display:none;">
+  <div
+    id="screen-confirm"
+    style="display:none;"
+  >
 
-    <div class="card" style="text-align: center;">
+    <div
+      class="card"
+      style="text-align: center;"
+    >
 
       <div
         class="card-header"
@@ -356,7 +455,12 @@
         📜 あなたの役職と確認タイム
       </div>
 
-      <div style="font-size: 1.1rem; color: var(--text-muted);">
+      <div
+        style="
+          font-size: 1.1rem;
+          color: var(--text-muted);
+        "
+      >
         あなたの役職:
       </div>
 
@@ -378,6 +482,7 @@
           border: 1px solid var(--gold-dark);
         "
       >
+
         <div
           style="
             font-size: 1.1rem;
@@ -394,6 +499,7 @@
         >
           -
         </div>
+
       </div>
 
       <div
@@ -406,7 +512,10 @@
         自動開始まで:
         <span
           id="confirm-timer"
-          style="font-weight:bold; font-size:1.4rem;"
+          style="
+            font-weight:bold;
+            font-size:1.4rem;
+          "
         >
           20
         </span>
@@ -414,17 +523,25 @@
       </div>
 
     </div>
+
   </div>
 
   <!-- 質問フェイズ -->
-  <div id="screen-question" style="display:none;">
+  <div
+    id="screen-question"
+    style="display:none;"
+  >
 
     <div class="sticky-role-box">
+
       <div>
         役職:
         <span
           id="sticky-role"
-          style="color:var(--gold-main); font-weight:bold;"
+          style="
+            color:var(--gold-main);
+            font-weight:bold;
+          "
         >
           -
         </span>
@@ -434,14 +551,21 @@
         お題:
         <span
           id="sticky-word"
-          style="color:var(--danger-color); font-weight:bold;"
+          style="
+            color:var(--danger-color);
+            font-weight:bold;
+          "
         >
           -
         </span>
       </div>
+
     </div>
 
-    <div class="timer-display" id="question-timer">
+    <div
+      class="timer-display"
+      id="question-timer"
+    >
       05:00
     </div>
 
@@ -453,7 +577,8 @@
         margin-bottom:12px;
       "
     >
-      ❓ 質問フェイズ（マスターにお題を質問してください）
+      ❓ 質問フェイズ
+      （マスターにお題を質問してください）
     </div>
 
     <div class="card">
@@ -462,35 +587,45 @@
         class="card-header"
         style="color:var(--gold-main);"
       >
-        🗣️ 庶民・インサイダーは「はい/いいえ」で答えられる質問をしましょう
+        🗣️ 庶民・インサイダーは
+        「はい/いいえ」で答えられる質問をしましょう
       </div>
 
       <p
         style="
           font-size:1.05rem;
-          line-height:1.6;
-          margin-top:6px;
+          line-height: 1.6;
+          margin-top: 6px;
         "
       >
-        正解（お題）に辿り着いたら、正解ボタンを押して議論へ進みます。
+        正解（お題）に辿り着いたら、
+        正解ボタンを押して議論へ進みます。
       </p>
 
       <button
         onclick="requestCorrectAnswer()"
         style="
-          background:linear-gradient(135deg, #27ae60 0%, #1e8449 100%);
-          color:#fff;
-          margin-top:14px;
+          background: linear-gradient(
+            135deg,
+            #27ae60 0%,
+            #1e8449 100%
+          );
+          color: #fff;
+          margin-top: 14px;
         "
       >
         🎯 正解が出たので投票・議論へ進む
       </button>
 
     </div>
+
   </div>
 
   <!-- 投票フェイズ -->
-  <div id="screen-vote" style="display:none;">
+  <div
+    id="screen-vote"
+    style="display:none;"
+  >
 
     <div class="sticky-role-box">
 
@@ -498,7 +633,10 @@
         役職:
         <span
           id="sticky-role-v"
-          style="color:var(--gold-main); font-weight:bold;"
+          style="
+            color:var(--gold-main);
+            font-weight:bold;
+          "
         >
           -
         </span>
@@ -508,7 +646,10 @@
         お題:
         <span
           id="sticky-word-v"
-          style="color:var(--danger-color); font-weight:bold;"
+          style="
+            color:var(--danger-color);
+            font-weight:bold;
+          "
         >
           -
         </span>
@@ -516,7 +657,10 @@
 
     </div>
 
-    <div class="timer-display" id="discussion-timer">
+    <div
+      class="timer-display"
+      id="discussion-timer"
+    >
       03:00
     </div>
 
@@ -535,9 +679,9 @@
 
       <div
         style="
-          font-size:1.3rem;
-          font-weight:bold;
-          color:var(--gold-light);
+          font-size: 1.3rem;
+          font-weight: bold;
+          color: var(--gold-light);
         "
       >
         🗳️ 投票状況:
@@ -569,28 +713,35 @@
       ></div>
 
     </div>
+
   </div>
 
   <!-- 結果画面 -->
-  <div id="screen-result" style="display:none;">
+  <div
+    id="screen-result"
+    style="display:none;"
+  >
 
-    <div class="card" style="text-align:center;">
+    <div
+      class="card"
+      style="text-align: center;"
+    >
 
       <h2
         id="result-winner-title"
         style="
-          margin:0;
-          color:var(--gold-main);
-          font-size:clamp(1.6rem,5vw,2.2rem);
+          margin: 0;
+          color: var(--gold-main);
+          font-size: clamp(1.6rem, 5vw, 2.2rem);
         "
       ></h2>
 
       <p
         id="result-winner-sub"
         style="
-          margin-top:8px;
-          font-size:1.15rem;
-          color:var(--text-muted);
+          margin-top: 8px;
+          font-size: 1.15rem;
+          color: var(--text-muted);
         "
       ></p>
 
@@ -604,7 +755,7 @@
 
       <div
         style="
-          margin-bottom:12px;
+          margin-bottom: 12px;
           font-size:1.15rem;
         "
       >
@@ -629,22 +780,30 @@
             </tr>
           </thead>
 
-          <tbody id="result-table-body"></tbody>
+          <tbody
+            id="result-table-body"
+          ></tbody>
 
         </table>
 
       </div>
+
     </div>
 
-    <div id="host-replay-panel" style="display:none;">
+    <div
+      id="host-replay-panel"
+      style="display:none;"
+    >
+
       <button onclick="requestReplay()">
         🔄 もう一度遊ぶ（待機ルームへ戻る）
       </button>
+
     </div>
 
   </div>
 
-  <div style="margin-top:10px;">
+  <div style="margin-top: 10px;">
 
     <div
       style="
@@ -668,17 +827,28 @@
 <script>
 
   const WORD_LIST = [
-    "冷蔵庫", "電子レンジ", "洗濯機", "テレビ", "エアコン", "掃除機", "ドライヤー", "炊飯器", "扇風機", "空気清浄機",
-    "ベッド", "ソファ", "テーブル", "カーテン", "鏡", "時計", "ゴミ箱", "傘", "ティッシュ", "ハンガー",
-    "ハサミ", "ホッチキス", "セロハンテープ", "ボールペン", "ノート", "消しゴム", "爪切り", "歯ブラシ", "シャンプー", "タオル",
-    "フライパン", "包丁", "まな板", "充電器", "イヤホン", "メガネ", "財布", "鍵", "スマートフォン", "クッション",
-    "ラーメン", "カレーライス", "寿司", "焼肉", "ハンバーグ", "パスタ", "うどん", "そば", "牛丼", "ピザ",
-    "オムライス", "たこ焼き", "お好み焼き", "天ぷら", "唐揚げ", "餃子", "サンドイッチ", "食パン", "おにぎり",
-    "リンゴ", "バナナ", "イチゴ", "ミカン", "スイカ", "ブドウ", "キャベツ", "トマト", "玉ねぎ", "ジャガイモ",
-    "学校", "病院", "コンビニ", "スーパーマーケット", "映画館", "遊園地", "水族館", "動物園", "図書館",
-    "温泉", "ホテル", "空港", "駅", "交番", "郵便局", "銀行", "公園", "キャンプ場",
-    "自動車", "タクシー", "バス", "トラック", "救急車", "消防車", "パトカー", "新幹線", "電車", "飛行機",
-    "犬", "猫", "ライオン", "パンダ", "ゾウ", "キリン", "コアラ", "ゴリラ", "ペンギン", "イルカ"
+    "冷蔵庫", "電子レンジ", "洗濯機", "テレビ", "エアコン",
+    "掃除機", "ドライヤー", "炊飯器", "扇風機", "空気清浄機",
+    "ベッド", "ソファ", "テーブル", "カーテン", "鏡",
+    "時計", "ゴミ箱", "傘", "ティッシュ", "ハンガー",
+    "ハサミ", "ホッチキス", "セロハンテープ", "ボールペン",
+    "ノート", "消しゴム", "爪切り", "歯ブラシ", "シャンプー",
+    "タオル", "フライパン", "包丁", "まな板", "充電器",
+    "イヤホン", "メガネ", "財布", "鍵", "スマートフォン",
+    "クッション", "ラーメン", "カレーライス", "寿司", "焼肉",
+    "ハンバーグ", "パスタ", "うどん", "そば", "牛丼",
+    "ピザ", "オムライス", "たこ焼き", "お好み焼き", "天ぷら",
+    "唐揚げ", "餃子", "サンドイッチ", "食パン", "おにぎり",
+    "リンゴ", "バナナ", "イチゴ", "ミカン", "スイカ",
+    "ブドウ", "キャベツ", "トマト", "玉ねぎ", "ジャガイモ",
+    "学校", "病院", "コンビニ", "スーパーマーケット",
+    "映画館", "遊園地", "水族館", "動物園", "図書館",
+    "温泉", "ホテル", "空港", "駅", "交番",
+    "郵便局", "銀行", "公園", "キャンプ場",
+    "自動車", "タクシー", "バス", "トラック", "救急車",
+    "消防車", "パトカー", "新幹線", "電車", "飛行機",
+    "犬", "猫", "ライオン", "パンダ", "ゾウ",
+    "キリン", "コアラ", "ゴリラ", "ペンギン", "イルカ"
   ];
 
   const PREFIX = "insider-game-v3-";
@@ -707,32 +877,41 @@
 
   let votes = {};
 
+
   function log(msg) {
+
     const box = document.getElementById("log-box");
 
     box.innerHTML += `<div>> ${msg}</div>`;
 
     box.scrollTop = box.scrollHeight;
+
   }
+
 
   function joinAsHost() {
 
     myName =
-      document.getElementById("input-name").value.trim()
-      || "ホスト";
+      document.getElementById("input-name")
+        .value.trim() || "ホスト";
 
     roomCode =
-      document.getElementById("input-room-code").value.trim().toLowerCase();
+      document.getElementById("input-room-code")
+        .value.trim().toLowerCase();
 
     if (!roomCode) {
-      return alert("合言葉（部屋名）を入力してください");
+      return alert(
+        "合言葉（部屋名）を入力してください"
+      );
     }
 
     isHost = true;
 
-    const peerId = `${PREFIX}${roomCode}-host`;
+    const peerId =
+      `${PREFIX}${roomCode}-host`;
 
     peer = new Peer(peerId);
+
 
     peer.on("open", (id) => {
 
@@ -747,8 +926,12 @@
 
       renderPlayers();
 
-      log(`部屋を作成しました (部屋名: ${roomCode})`);
+      log(
+        `部屋を作成しました (部屋名: ${roomCode})`
+      );
+
     });
+
 
     peer.on("error", (err) => {
 
@@ -768,15 +951,19 @@
 
     });
 
+
     peer.on("connection", (conn) => {
 
       conn.on("open", () => {
 
         conn.on("data", (data) => {
+
           handleHostData(conn, data);
+
         });
 
       });
+
 
       conn.on("close", () => {
 
@@ -797,19 +984,26 @@
       });
 
     });
+
   }
+
 
   function joinAsGuest() {
 
     myName =
-      document.getElementById("input-name").value.trim()
-      || "ゲスト";
+      document.getElementById("input-name")
+        .value.trim() || "ゲスト";
 
     roomCode =
-      document.getElementById("input-room-code").value.trim().toLowerCase();
+      document.getElementById("input-room-code")
+        .value.trim().toLowerCase();
 
     if (!roomCode) {
-      return alert("合言葉（部屋名）を入力してください");
+
+      return alert(
+        "合言葉（部屋名）を入力してください"
+      );
+
     }
 
     isHost = false;
@@ -819,12 +1013,14 @@
 
     peer = new Peer();
 
+
     peer.on("open", (id) => {
 
       myId = id;
 
       hostConn =
         peer.connect(hostPeerId);
+
 
       hostConn.on("open", () => {
 
@@ -841,11 +1037,15 @@
 
       });
 
+
       hostConn.on("data", (data) => {
+
         handleClientData(data);
+
       });
 
     });
+
 
     peer.on("error", () => {
 
@@ -854,23 +1054,38 @@
       );
 
     });
+
   }
+
 
   function setupLobbyUI() {
 
-    document.getElementById("screen-lobby").style.display = "none";
+    document.getElementById(
+      "screen-lobby"
+    ).style.display = "none";
 
-    document.getElementById("screen-room").style.display = "block";
+    document.getElementById(
+      "screen-room"
+    ).style.display = "block";
 
-    document.getElementById("screen-result").style.display = "none";
+    document.getElementById(
+      "screen-result"
+    ).style.display = "none";
 
-    document.getElementById("room-name-display").innerText =
-      roomCode;
+    document.getElementById(
+      "room-name-display"
+    ).innerText = roomCode;
 
     if (isHost) {
-      document.getElementById("host-panel").style.display = "block";
+
+      document.getElementById(
+        "host-panel"
+      ).style.display = "block";
+
     }
+
   }
+
 
   function renderPlayers() {
 
@@ -878,101 +1093,40 @@
       document.getElementById("player-list");
 
     el.innerHTML =
-      players.map(
-        p => `<span class="player-badge">👤 ${p.name}</span>`
-      ).join("");
+      players.map(p => `
+        <span class="player-badge">
+          👤 ${p.name}
+        </span>
+      `).join("");
+
 
     if (isHost) {
 
-      document.getElementById("btn-start").disabled =
-        players.length < 3;
-
-    }
-  }
-
-  function broadcast(data) {
-
-    Object.values(connections).forEach(c => {
-      c.send(data);
-    });
-
-    handleClientData(data);
-  }
-
-  function handleHostData(conn, data) {
-
-    if (data.type === "JOIN") {
-
-      connections[conn.peer] = conn;
-
-      players.push({
-        id: conn.peer,
-        name: data.name
-      });
-
-      broadcast({
-        type: "PLAYER_LIST",
-        players
-      });
-
-      renderPlayers();
-
-    }
-
-    else if (data.type === "VOTE") {
-
-      handleVote(
-        conn.peer,
-        data.targetId
-      );
-
-    }
-
-    else if (data.type === "CORRECT_ANSWER") {
-
-      triggerDiscussionPhase();
+      document.getElementById(
+        "btn-start"
+      ).disabled = players.length < 3;
 
     }
 
   }
 
-  function shuffle(array) {
-
-    for (
-      let i = array.length - 1;
-      i > 0;
-      i--
-    ) {
-
-      const j =
-        Math.floor(Math.random() * (i + 1));
-
-      [
-        array[i],
-        array[j]
-      ] = [
-        array[j],
-        array[i]
-      ];
-
-    }
-
-    return array;
-  }
 
   /*
-   * ==========================================================
-   * 修正箇所
-   * ==========================================================
+   * ============================================================
+   * ゲーム開始
+   * ============================================================
    *
-   * ホストがマスターである必要はありません。
+   * ★今回の修正ポイント
    *
-   * players の中から完全にランダムで
-   * マスター・インサイダーを決定し、
-   * それぞれ本人にだけ必要な情報を送ります。
+   * ホストがマスター/インサイダーかどうかではなく、
+   * 「そのプレイヤー自身の役職」でお題を見る権限を決める。
    *
-   * マスターがゲストの場合でも、
-   * role === "マスター" なら secretWord を送ります。
+   * マスター       -> canSeeWord: true
+   * インサイダー   -> canSeeWord: true
+   * 庶民           -> canSeeWord: false
+   *
+   * さらに、各プレイヤーへ個別にGAME_STARTを送信する。
+   * ============================================================
    */
 
   function startGame() {
@@ -983,17 +1137,24 @@
 
     votes = {};
 
+
     questionDuration =
       parseInt(
-        document.getElementById("select-question-time").value,
+        document.getElementById(
+          "select-question-time"
+        ).value,
         10
       );
 
+
     discussionDuration =
       parseInt(
-        document.getElementById("select-discussion-time").value,
+        document.getElementById(
+          "select-discussion-time"
+        ).value,
         10
       );
+
 
     // お題を決定
     secretWord =
@@ -1003,90 +1164,90 @@
         )
       ];
 
+
     // プレイヤーをシャッフル
     const shuffled =
       shuffle([...players]);
 
-    // 役職をランダム決定
+
+    // 役職を決定
     const masterId =
       shuffled[0].id;
 
     const insiderId =
       shuffled[1].id;
 
-    // 全プレイヤーの役職を設定
-    players.forEach(player => {
 
-      if (player.id === masterId) {
+    // 全員の役職を確定
+    players.forEach(p => {
 
-        player.role = "マスター";
+      if (p.id === masterId) {
 
-      }
+        p.role = "マスター";
 
-      else if (player.id === insiderId) {
+      } else if (p.id === insiderId) {
 
-        player.role = "インサイダー";
+        p.role = "インサイダー";
 
-      }
+      } else {
 
-      else {
-
-        player.role = "庶民";
+        p.role = "庶民";
 
       }
 
     });
 
+
     /*
-     * プレイヤーごとに個別のGAME_STARTを送信
-     *
-     * マスター     → お題を表示
-     * インサイダー → お題を表示
-     * 庶民         → 非公開
-     *
-     * ホストかゲストかは一切関係なし。
+     * 各プレイヤーに個別のGAME_STARTを送信
      */
-    players.forEach(player => {
+    players.forEach(p => {
 
-      const role =
-        player.role;
+      // ★役職だけでお題閲覧権限を決める
+      const canSeeWord =
+        p.role === "マスター" ||
+        p.role === "インサイダー";
 
-      const wordForPlayer =
-        (
-          role === "マスター" ||
-          role === "インサイダー"
-        )
-          ? secretWord
-          : "??? (非公開)";
 
       const payload = {
 
         type: "GAME_START",
 
-        role: role,
+        // プレイヤー自身の役職
+        role: p.role,
 
-        word: wordForPlayer,
+        // ★今回の重要部分
+        canSeeWord: canSeeWord,
 
-        questionTime: questionDuration,
+        // ★マスター/インサイダーには実際のお題
+        // ★庶民には非公開文字列
+        word: canSeeWord
+          ? secretWord
+          : "??? (非公開)",
 
-        discussionTime: discussionDuration
+        questionTime:
+          questionDuration,
+
+        discussionTime:
+          discussionDuration
 
       };
 
-      // ホスト本人の場合
-      if (player.id === myId) {
+
+      // ホスト自身
+      if (p.id === myId) {
 
         handleClientData(payload);
 
       }
 
-      // ゲストの場合
+      // ゲスト
       else {
 
         const conn =
-          connections[player.id];
+          connections[p.id];
 
-        if (conn) {
+        if (conn && conn.open) {
 
           conn.send(payload);
 
@@ -1095,113 +1256,134 @@
       }
 
     });
+
   }
 
-  /*
-   * ==========================================================
-   * 修正箇所
-   * ==========================================================
-   *
-   * 受信した役職を基準にお題を表示。
-   *
-   * 「ホストだから」「ゲストだから」ではなく、
-   * 「マスターかインサイダーか」で判断します。
-   */
 
   function setupConfirmScreen(data) {
 
     myRole = data.role;
 
-    // マスター・インサイダーならお題を受け取る
-    if (
-      myRole === "マスター" ||
-      myRole === "インサイダー"
-    ) {
 
-      secretWord = data.word;
+    document.getElementById(
+      "screen-room"
+    ).style.display = "none";
 
-    }
+    document.getElementById(
+      "screen-confirm"
+    ).style.display = "block";
 
-    // 庶民なら非公開
-    else {
+    document.getElementById(
+      "screen-question"
+    ).style.display = "none";
 
-      secretWord = "??? (非公開)";
+    document.getElementById(
+      "screen-vote"
+    ).style.display = "none";
 
-    }
+    document.getElementById(
+      "screen-result"
+    ).style.display = "none";
 
-    document.getElementById("screen-room").style.display = "none";
 
-    document.getElementById("screen-confirm").style.display = "block";
+    // 役職を表示
+    document.getElementById(
+      "info-role"
+    ).innerText = myRole;
 
-    document.getElementById("screen-question").style.display = "none";
 
-    document.getElementById("screen-vote").style.display = "none";
-
-    document.getElementById("screen-result").style.display = "none";
-
-    // 役職表示
-    document.getElementById("info-role").innerText =
-      myRole;
-
-    // お題表示
     const wordEl =
       document.getElementById("info-word");
 
-    wordEl.innerText =
-      secretWord;
 
-    if (
-      myRole === "マスター" ||
-      myRole === "インサイダー"
-    ) {
+    /*
+     * ★ここも修正
+     *
+     * roleだけではなくcanSeeWordを使用。
+     *
+     * GAME_STARTで個別にtrue/falseが送られてくるので、
+     * ホストが何の役職でも関係ない。
+     */
+
+    if (data.canSeeWord === true) {
+
+      secretWord = data.word;
+
+      wordEl.innerText =
+        data.word;
 
       wordEl.style.color =
         "var(--danger-color)";
 
-    }
+    } else {
 
-    else {
+      secretWord =
+        "??? (非公開)";
+
+      wordEl.innerText =
+        "??? (非公開)";
 
       wordEl.style.color =
         "var(--text-muted)";
 
     }
 
+
     // 上部ヘッダー
-    document.getElementById("sticky-role").innerText =
-      myRole;
+    document.getElementById(
+      "sticky-role"
+    ).innerText = myRole;
 
-    document.getElementById("sticky-word").innerText =
-      secretWord;
+    document.getElementById(
+      "sticky-word"
+    ).innerText = secretWord;
 
-    document.getElementById("sticky-role-v").innerText =
-      myRole;
+    document.getElementById(
+      "sticky-role-v"
+    ).innerText = myRole;
 
-    document.getElementById("sticky-word-v").innerText =
-      secretWord;
+    document.getElementById(
+      "sticky-word-v"
+    ).innerText = secretWord;
+
 
     // 確認タイマー
     let confirmRemaining = 20;
 
-    document.getElementById("confirm-timer").innerText =
+    document.getElementById(
+      "confirm-timer"
+    ).innerText =
       confirmRemaining;
 
-    clearInterval(confirmTimerInterval);
+
+    clearInterval(
+      confirmTimerInterval
+    );
+
 
     confirmTimerInterval =
       setInterval(() => {
 
         confirmRemaining--;
 
-        document.getElementById("confirm-timer").innerText =
+        document.getElementById(
+          "confirm-timer"
+        ).innerText =
           confirmRemaining;
+
 
         if (confirmRemaining <= 0) {
 
-          clearInterval(confirmTimerInterval);
+          clearInterval(
+            confirmTimerInterval
+          );
 
-          // ホストは進行役。
-          // マスターである必要はない。
+
+          /*
+           * ホストはゲーム進行役。
+           * ホストの役職とは無関係に質問フェイズを開始。
+           */
+
           if (isHost) {
 
             startQuestionPhase();
@@ -1211,7 +1393,9 @@
         }
 
       }, 1000);
+
   }
+
 
   function startQuestionPhase() {
 
@@ -1219,15 +1403,21 @@
       type: "START_QUESTION"
     });
 
+
     let remaining =
       questionDuration;
+
 
     broadcast({
       type: "QUESTION_TIMER_SYNC",
       time: remaining
     });
 
-    clearInterval(questionTimerInterval);
+
+    clearInterval(
+      questionTimerInterval
+    );
+
 
     questionTimerInterval =
       setInterval(() => {
@@ -1239,16 +1429,21 @@
           time: remaining
         });
 
+
         if (remaining <= 0) {
 
-          clearInterval(questionTimerInterval);
+          clearInterval(
+            questionTimerInterval
+          );
 
           triggerTimeOutResult();
 
         }
 
       }, 1000);
+
   }
+
 
   function triggerDiscussionPhase() {
 
@@ -1256,21 +1451,26 @@
       questionTimerInterval
     );
 
+
     broadcast({
       type: "START_DISCUSSION"
     });
 
+
     let remaining =
       discussionDuration;
+
 
     broadcast({
       type: "DISCUSSION_TIMER_SYNC",
       time: remaining
     });
 
+
     clearInterval(
       discussionTimerInterval
     );
+
 
     discussionTimerInterval =
       setInterval(() => {
@@ -1282,6 +1482,7 @@
           time: remaining
         });
 
+
         if (remaining <= 0) {
 
           clearInterval(
@@ -1291,7 +1492,9 @@
         }
 
       }, 1000);
+
   }
+
 
   function requestCorrectAnswer() {
 
@@ -1299,16 +1502,16 @@
 
       triggerDiscussionPhase();
 
-    }
-
-    else {
+    } else {
 
       hostConn.send({
         type: "CORRECT_ANSWER"
       });
 
     }
+
   }
+
 
   function formatTime(seconds) {
 
@@ -1323,7 +1526,55 @@
         .padStart(2, "0");
 
     return `${m}:${s}`;
+
   }
+
+
+  function handleHostData(conn, data) {
+
+    if (data.type === "JOIN") {
+
+      connections[conn.peer] =
+        conn;
+
+
+      players.push({
+        id: conn.peer,
+        name: data.name
+      });
+
+
+      broadcast({
+        type: "PLAYER_LIST",
+        players
+      });
+
+
+      renderPlayers();
+
+    }
+
+
+    else if (data.type === "VOTE") {
+
+      handleVote(
+        conn.peer,
+        data.targetId
+      );
+
+    }
+
+
+    else if (
+      data.type === "CORRECT_ANSWER"
+    ) {
+
+      triggerDiscussionPhase();
+
+    }
+
+  }
+
 
   function handleClientData(data) {
 
@@ -1336,47 +1587,71 @@
 
     }
 
+
     else if (data.type === "GAME_START") {
 
       setupConfirmScreen(data);
 
     }
 
-    else if (data.type === "START_QUESTION") {
+
+    else if (
+      data.type === "START_QUESTION"
+    ) {
 
       clearInterval(
         confirmTimerInterval
       );
 
-      document.getElementById("screen-confirm").style.display =
-        "none";
 
-      document.getElementById("screen-question").style.display =
-        "block";
+      document.getElementById(
+        "screen-confirm"
+      ).style.display = "none";
+
+
+      document.getElementById(
+        "screen-question"
+      ).style.display = "block";
 
     }
 
-    else if (data.type === "QUESTION_TIMER_SYNC") {
 
-      document.getElementById("question-timer").innerText =
+    else if (
+      data.type === "QUESTION_TIMER_SYNC"
+    ) {
+
+      document.getElementById(
+        "question-timer"
+      ).innerText =
         formatTime(data.time);
 
     }
 
-    else if (data.type === "START_DISCUSSION") {
+
+    else if (
+      data.type === "START_DISCUSSION"
+    ) {
 
       startVoteScreen();
 
     }
 
-    else if (data.type === "DISCUSSION_TIMER_SYNC") {
 
-      document.getElementById("discussion-timer").innerText =
+    else if (
+      data.type === "DISCUSSION_TIMER_SYNC"
+    ) {
+
+      document.getElementById(
+        "discussion-timer"
+      ).innerText =
         formatTime(data.time);
 
     }
 
-    else if (data.type === "VOTE_PROGRESS") {
+
+    else if (
+      data.type === "VOTE_PROGRESS"
+    ) {
 
       updateVoteProgressUI(
         data.votedCount,
@@ -1386,26 +1661,87 @@
 
     }
 
-    else if (data.type === "SHOW_RESULT") {
+
+    else if (
+      data.type === "SHOW_RESULT"
+    ) {
 
       showResultScreen(data);
 
     }
 
-    else if (data.type === "RETURN_TO_ROOM") {
+
+    else if (
+      data.type === "RETURN_TO_ROOM"
+    ) {
 
       returnToRoom();
 
     }
+
   }
+
+
+  function broadcast(data) {
+
+    Object.values(
+      connections
+    ).forEach(c => {
+
+      if (c && c.open) {
+
+        c.send(data);
+
+      }
+
+    });
+
+
+    // ホスト自身にも処理させる
+    handleClientData(data);
+
+  }
+
+
+  function shuffle(array) {
+
+    for (
+      let i = array.length - 1;
+      i > 0;
+      i--
+    ) {
+
+      const j =
+        Math.floor(
+          Math.random() * (i + 1)
+        );
+
+
+      [
+        array[i],
+        array[j]
+      ] = [
+        array[j],
+        array[i]
+      ];
+
+    }
+
+    return array;
+
+  }
+
 
   function startVoteScreen() {
 
-    document.getElementById("screen-question").style.display =
-      "none";
+    document.getElementById(
+      "screen-question"
+    ).style.display = "none";
 
-    document.getElementById("screen-vote").style.display =
-      "block";
+    document.getElementById(
+      "screen-vote"
+    ).style.display = "block";
+
 
     updateVoteProgressUI(
       0,
@@ -1413,10 +1749,15 @@
       []
     );
 
+
     const voteBox =
-      document.getElementById("vote-buttons");
+      document.getElementById(
+        "vote-buttons"
+      );
+
 
     voteBox.innerHTML = "";
+
 
     players.forEach(p => {
 
@@ -1425,23 +1766,41 @@
         const btn =
           document.createElement("button");
 
+
         btn.innerText =
           `🗳️ 「${p.name}」 に投票`;
 
-        btn.onclick =
-          () => castVote(p.id);
+
+        btn.onclick = () =>
+          castVote(p.id);
+
 
         voteBox.appendChild(btn);
 
       }
 
     });
+
   }
+
 
   function castVote(targetId) {
 
-    document.getElementById("vote-buttons").innerHTML =
-      "<p style='color:var(--gold-light); font-size:1.2rem; text-align:center;'>投票完了。全員の投票を待っています...</p>";
+    document.getElementById(
+      "vote-buttons"
+    ).innerHTML =
+      `
+        <p
+          style="
+            color:var(--gold-light);
+            font-size:1.2rem;
+            text-align:center;
+          "
+        >
+          投票完了。全員の投票を待っています...
+        </p>
+      `;
+
 
     if (isHost) {
 
@@ -1450,22 +1809,26 @@
         targetId
       );
 
-    }
-
-    else {
+    } else {
 
       hostConn.send({
         type: "VOTE",
-        targetId: targetId
+        targetId
       });
 
     }
+
   }
 
-  function handleVote(fromId, targetId) {
+
+  function handleVote(
+    fromId,
+    targetId
+  ) {
 
     votes[fromId] =
       targetId;
+
 
     const votedCount =
       Object.keys(votes).length;
@@ -1475,6 +1838,7 @@
 
     const votedPlayerIds =
       Object.keys(votes);
+
 
     broadcast({
 
@@ -1491,44 +1855,58 @@
 
     });
 
-    if (votedCount === totalCount) {
+
+    if (
+      votedCount === totalCount
+    ) {
 
       const counts = {};
 
-      Object.values(votes).forEach(t => {
 
-        counts[t] =
-          (counts[t] || 0) + 1;
+      Object.values(votes)
+        .forEach(target => {
 
-      });
+          counts[target] =
+            (counts[target] || 0) + 1;
+
+        });
+
 
       let maxCnt = 0;
 
-      Object.values(counts).forEach(cnt => {
 
-        if (cnt > maxCnt) {
+      Object.values(counts)
+        .forEach(cnt => {
 
-          maxCnt = cnt;
+          if (cnt > maxCnt) {
 
-        }
+            maxCnt = cnt;
 
-      });
+          }
+
+        });
+
 
       const topVotedIds =
         Object.keys(counts)
           .filter(
-            id => counts[id] === maxCnt
+            id =>
+              counts[id] === maxCnt
           );
+
 
       const insider =
         players.find(
-          p => p.role === "インサイダー"
+          p =>
+            p.role === "インサイダー"
         );
+
 
       const isSuccess =
         topVotedIds.includes(
           insider.id
         );
+
 
       const finalPlayersResult =
         players.map(p => {
@@ -1538,8 +1916,10 @@
 
           const votedTarget =
             players.find(
-              x => x.id === votedTargetId
+              x =>
+                x.id === votedTargetId
             );
+
 
           return {
 
@@ -1557,13 +1937,15 @@
 
         });
 
+
       const resultPayload = {
 
         type: "SHOW_RESULT",
 
         isTimeout: false,
 
-        isSuccess: isSuccess,
+        isSuccess:
+          isSuccess,
 
         insiderId:
           insider.id,
@@ -1579,11 +1961,15 @@
 
       };
 
+
       broadcast(
         resultPayload
       );
+
     }
+
   }
+
 
   function updateVoteProgressUI(
     votedCount,
@@ -1591,11 +1977,17 @@
     votedPlayerIds
   ) {
 
-    document.getElementById("vote-count-display").innerText =
+    document.getElementById(
+      "vote-count-display"
+    ).innerText =
       `${votedCount} / ${totalCount}`;
 
+
     const listEl =
-      document.getElementById("vote-status-list");
+      document.getElementById(
+        "vote-status-list"
+      );
+
 
     listEl.innerHTML =
       players.map(p => {
@@ -1605,15 +1997,18 @@
             p.id
           );
 
+
         const statusText =
           hasVoted
             ? "✓ 投票済み"
             : "投票中...";
 
+
         const badgeClass =
           hasVoted
             ? "status-badge done"
             : "status-badge";
+
 
         return `
           <span class="${badgeClass}">
@@ -1622,14 +2017,18 @@
         `;
 
       }).join("");
+
   }
+
 
   function triggerTimeOutResult() {
 
     const insider =
       players.find(
-        p => p.role === "インサイダー"
+        p =>
+          p.role === "インサイダー"
       );
+
 
     const finalPlayersResult =
       players.map(p => ({
@@ -1642,6 +2041,7 @@
           "時間切れのため未投票"
 
       }));
+
 
     broadcast({
 
@@ -1664,7 +2064,9 @@
         finalPlayersResult
 
     });
+
   }
+
 
   function showResultScreen(data) {
 
@@ -1676,29 +2078,37 @@
       discussionTimerInterval
     );
 
-    document.getElementById("screen-vote").style.display =
-      "none";
 
-    document.getElementById("screen-question").style.display =
-      "none";
+    document.getElementById(
+      "screen-vote"
+    ).style.display = "none";
 
-    document.getElementById("screen-result").style.display =
-      "block";
+    document.getElementById(
+      "screen-question"
+    ).style.display = "none";
+
+    document.getElementById(
+      "screen-result"
+    ).style.display = "block";
+
 
     const titleEl =
       document.getElementById(
         "result-winner-title"
       );
 
+
     const subEl =
       document.getElementById(
         "result-winner-sub"
       );
 
+
     document.getElementById(
       "result-secret-word"
     ).innerText =
       data.secretWord;
+
 
     if (data.isTimeout) {
 
@@ -1709,9 +2119,11 @@
         "var(--danger-color)";
 
       subEl.innerText =
-        `時間内にお題に辿り着けませんでした。（インサイダー: 「${data.insiderName}」）`;
+        `時間内にお題に辿り着けませんでした。
+        （インサイダー: 「${data.insiderName}」）`;
 
     }
+
 
     else if (data.isSuccess) {
 
@@ -1722,9 +2134,11 @@
         "var(--success-color)";
 
       subEl.innerText =
-        `見事にインサイダー（「${data.insiderName}」）を見破り追放しました！`;
+        `見事にインサイダー
+        （「${data.insiderName}」）を見破り追放しました！`;
 
     }
+
 
     else {
 
@@ -1735,14 +2149,18 @@
         "var(--danger-color)";
 
       subEl.innerText =
-        `追放失敗... インサイダー（「${data.insiderName}」）は潜伏に成功しました！`;
+        `追放失敗...
+        インサイダー
+        （「${data.insiderName}」）は潜伏に成功しました！`;
 
     }
+
 
     const tbody =
       document.getElementById(
         "result-table-body"
       );
+
 
     tbody.innerHTML =
       data.allPlayersResult
@@ -1750,6 +2168,7 @@
 
           let roleColor =
             "var(--text-color)";
+
 
           if (
             p.role === "インサイダー"
@@ -1760,6 +2179,7 @@
 
           }
 
+
           if (
             p.role === "マスター"
           ) {
@@ -1769,8 +2189,10 @@
 
           }
 
+
           return `
             <tr>
+
               <td>
                 <strong>「${p.name}」</strong>
               </td>
@@ -1787,30 +2209,31 @@
               <td>
                 👉 「${p.votedToName}」
               </td>
+
             </tr>
           `;
 
         })
         .join("");
 
+
+
     if (isHost) {
 
       document.getElementById(
         "host-replay-panel"
-      ).style.display =
-        "block";
+      ).style.display = "block";
 
-    }
-
-    else {
+    } else {
 
       document.getElementById(
         "host-replay-panel"
-      ).style.display =
-        "none";
+      ).style.display = "none";
 
     }
+
   }
+
 
   function requestReplay() {
 
@@ -1821,7 +2244,9 @@
       });
 
     }
+
   }
+
 
   function returnToRoom() {
 
@@ -1831,19 +2256,21 @@
 
     votes = {};
 
+
     document.getElementById(
       "screen-result"
-    ).style.display =
-      "none";
+    ).style.display = "none";
+
 
     document.getElementById(
       "screen-room"
-    ).style.display =
-      "block";
+    ).style.display = "block";
+
 
     log(
       "待機ルームに戻りました。"
     );
+
   }
 
 </script>
