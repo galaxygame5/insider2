@@ -312,7 +312,7 @@
       <div style="font-size: 1.1rem; color: var(--text-muted);">あなたの役職:</div>
       <div id="info-role" class="info-highlight" style="margin: 8px 0;">-</div>
 
-      <div id="info-word-box" style="margin-top: 20px; background: #111; padding: 16px; border-radius: 8px; border: 1px solid var(--gold-dark);">
+      <div id="info-word-box" style="display:none; margin-top: 20px; background: #111; padding: 16px; border-radius: 8px; border: 1px solid var(--gold-dark);">
         <div style="font-size: 1.1rem; color: var(--gold-light); font-weight: bold;">秘密のお題</div>
         <div id="info-word" class="word-highlight">-</div>
       </div>
@@ -327,7 +327,7 @@
   <div id="screen-question" style="display:none;">
     <div class="sticky-role-box">
       <div>役職: <span id="sticky-role" style="color:var(--gold-main); font-weight:bold;">-</span></div>
-      <div>お題: <span id="sticky-word" style="color:var(--danger-color); font-weight:bold;">-</span></div>
+      <div id="sticky-word-container">お題: <span id="sticky-word" style="color:var(--danger-color); font-weight:bold;">-</span></div>
     </div>
 
     <div class="timer-display" id="question-timer">05:00</div>
@@ -348,7 +348,7 @@
   <div id="screen-vote" style="display:none;">
     <div class="sticky-role-box">
       <div>役職: <span id="sticky-role-v" style="color:var(--gold-main); font-weight:bold;">-</span></div>
-      <div>お題: <span id="sticky-word-v" style="color:var(--danger-color); font-weight:bold;">-</span></div>
+      <div id="sticky-word-container-v">お題: <span id="sticky-word-v" style="color:var(--danger-color); font-weight:bold;">-</span></div>
     </div>
 
     <div class="timer-display" id="discussion-timer">03:00</div>
@@ -555,16 +555,21 @@
 
       p.role = role;
 
+      const isKnowsWord = (role === 'マスター' || role === 'インサイダー');
+
       const payload = {
         type: 'GAME_START',
         role: role,
-        word: (role === 'マスター' || role === 'インサイダー') ? secretWord : "??? (非公開)",
+        word: isKnowsWord ? secretWord : "???",
         questionTime: questionDuration,
         discussionTime: discussionDuration
       };
 
-      if (p.id === myId) handleClientData(payload);
-      else connections[p.id].send(payload);
+      if (p.id === myId) {
+        setupConfirmScreen(payload);
+      } else {
+        connections[p.id].send(payload);
+      }
     });
   }
 
@@ -582,21 +587,33 @@
 
     const wordEl = document.getElementById("info-word");
     const wordBox = document.getElementById("info-word-box");
-    wordEl.innerText = secretWord;
 
     if (myRole === "マスター" || myRole === "インサイダー") {
       wordBox.style.display = "block";
+      wordEl.innerText = secretWord;
       wordEl.style.color = "var(--danger-color)";
     } else {
       wordBox.style.display = "none";
-      wordEl.style.color = "var(--text-muted)";
     }
 
-    // 上部ヘッダーの準備
+    // 上部ヘッダー（Stickyバー）の制御
     document.getElementById("sticky-role").innerText = myRole;
-    document.getElementById("sticky-word").innerText = secretWord;
     document.getElementById("sticky-role-v").innerText = myRole;
-    document.getElementById("sticky-word-v").innerText = secretWord;
+
+    const stickyWordEl = document.getElementById("sticky-word");
+    const stickyWordElV = document.getElementById("sticky-word-v");
+    const stickyWordContainer = document.getElementById("sticky-word-container");
+    const stickyWordContainerV = document.getElementById("sticky-word-container-v");
+
+    if (myRole === "マスター" || myRole === "インサイダー") {
+      stickyWordContainer.style.display = "block";
+      stickyWordContainerV.style.display = "block";
+      stickyWordEl.innerText = secretWord;
+      stickyWordElV.innerText = secretWord;
+    } else {
+      stickyWordContainer.style.display = "none";
+      stickyWordContainerV.style.display = "none";
+    }
 
     let confirmRemaining = 20;
     document.getElementById("confirm-timer").innerText = confirmRemaining;
