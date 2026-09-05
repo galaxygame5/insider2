@@ -564,10 +564,12 @@
 
       p.role = role;
 
+      // マスターとインサイダーにのみ正しくお題を送信
+      const isKnownRole = (role === 'マスター' || role === 'インサイダー');
       const payload = {
         type: 'GAME_START',
         role: role,
-        word: (role === 'マスター' || role === 'インサイダー') ? secretWord : "??? (非公開)",
+        word: isKnownRole ? secretWord : "??? (非公開)",
         questionTime: questionDuration,
         discussionTime: discussionDuration
       };
