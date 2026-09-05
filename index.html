@@ -1,6 +1,4 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
+<!DOCTYPE html><html lang="ja"><head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>インサイダーゲーム Online</title>
@@ -256,11 +254,7 @@
       font-size: 0.9rem;
       color: var(--text-muted);
     }
-  </style>
-</head>
-<body>
-
-<div class="main-container">
+  </style></head><body><div class="main-container">
   <div class="title-area">
     <h1>🕵️ インサイダーゲーム</h1>
     <div class="subtitle">— ONLINE SECRET DEDUCTION GAME —</div>
@@ -403,10 +397,7 @@
   <div style="margin-top: 10px;">
     <div style="font-size:0.9rem; color:var(--text-muted); margin-bottom:4px;">LOG</div>
     <div class="log-container" id="log-box"></div>
-  </div>
-</div>
-
-<script>
+  </div></div><script>
   const WORD_LIST = [
     "冷蔵庫", "電子レンジ", "洗濯機", "テレビ", "エアコン", "掃除機", "ドライヤー", "炊飯器", "扇風機", "空気清浄機",
     "ベッド", "ソファ", "テーブル", "カーテン", "鏡", "時計", "ゴミ箱", "傘", "ティッシュ", "ハンガー",
@@ -564,12 +555,10 @@
 
       p.role = role;
 
-      // マスターとインサイダーにのみ正しくお題を送信
-      const isKnownRole = (role === 'マスター' || role === 'インサイダー');
       const payload = {
         type: 'GAME_START',
         role: role,
-        word: isKnownRole ? secretWord : "??? (非公開)",
+        word: (role === 'マスター' || role === 'インサイダー') ? secretWord : "??? (非公開)",
         questionTime: questionDuration,
         discussionTime: discussionDuration
       };
@@ -592,11 +581,14 @@
     document.getElementById("info-role").innerText = myRole;
 
     const wordEl = document.getElementById("info-word");
+    const wordBox = document.getElementById("info-word-box");
     wordEl.innerText = secretWord;
 
     if (myRole === "マスター" || myRole === "インサイダー") {
+      wordBox.style.display = "block";
       wordEl.style.color = "var(--danger-color)";
     } else {
+      wordBox.style.display = "none";
       wordEl.style.color = "var(--text-muted)";
     }
 
@@ -863,7 +855,4 @@
     document.getElementById("screen-result").style.display = "none";
     document.getElementById("screen-room").style.display = "block";
     log("待機ルームに戻りました。");
-  }
-</script>
-</body>
-</html>
+  }</script></body></html>
