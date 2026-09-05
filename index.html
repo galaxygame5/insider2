@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="ja"><head>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>インサイダーゲーム Online</title>
@@ -226,7 +228,10 @@
       background: rgba(42, 157, 143, 0.2);
     }
 
-    .table-wrapper { width: 100%; overflow-x: auto; }
+    .table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+    }
 
     .result-table {
       width: 100%;
@@ -235,13 +240,17 @@
       font-size: clamp(0.95rem, 3.2vw, 1.15rem);
     }
 
-    .result-table th, .result-table td {
+    .result-table th,
+    .result-table td {
       border: 1px solid rgba(212, 175, 55, 0.3);
       padding: clamp(8px, 2vw, 14px);
       text-align: center;
     }
 
-    .result-table th { background: #111; color: var(--gold-light); }
+    .result-table th {
+      background: #111;
+      color: var(--gold-light);
+    }
 
     .log-container {
       background: #0a0a0a;
@@ -254,7 +263,12 @@
       font-size: 0.9rem;
       color: var(--text-muted);
     }
-  </style></head><body><div class="main-container">
+  </style>
+</head>
+<body>
+
+<div class="main-container">
+
   <div class="title-area">
     <h1>🕵️ インサイダーゲーム</h1>
     <div class="subtitle">— ONLINE SECRET DEDUCTION GAME —</div>
@@ -264,30 +278,51 @@
   <div id="screen-lobby">
     <div class="card">
       <div class="card-header">👤 プレイヤー情報の入力</div>
+
       <label>あなたのプレイヤー名</label>
       <input type="text" id="input-name" placeholder="例: 名探偵">
-      
+
       <label>合言葉（部屋名）</label>
       <input type="text" id="input-room-code" placeholder="例: room123">
 
       <div style="display: flex; gap: 8px; margin-top: 8px;">
         <button id="btn-create" onclick="joinAsHost()">部屋を作る (ホスト)</button>
-        <button id="btn-join" onclick="joinAsGuest()" style="background: linear-gradient(135deg, #555 0%, #333 100%); color:#fff;">部屋に入る (ゲスト)</button>
+
+        <button
+          id="btn-join"
+          onclick="joinAsGuest()"
+          style="background: linear-gradient(135deg, #555 0%, #333 100%); color:#fff;"
+        >
+          部屋に入る (ゲスト)
+        </button>
       </div>
     </div>
   </div>
 
   <!-- 待機室 -->
   <div id="screen-room" style="display:none;">
+
     <div class="card">
-      <div class="card-header">🏰 参加待機ルーム (<span id="room-name-display">---</span>)</div>
-      <div style="margin-bottom: 10px; font-weight: bold;">現在の参加者:</div>
-      <div id="player-list" style="display: flex; flex-wrap: wrap; gap: 4px;"></div>
+      <div class="card-header">
+        🏰 参加待機ルーム (<span id="room-name-display">---</span>)
+      </div>
+
+      <div style="margin-bottom: 10px; font-weight: bold;">
+        現在の参加者:
+      </div>
+
+      <div
+        id="player-list"
+        style="display: flex; flex-wrap: wrap; gap: 4px;"
+      ></div>
     </div>
 
     <div id="host-panel" style="display:none;" class="card">
+
       <div class="card-header">👑 ホスト設定</div>
+
       <label>質問フェイズの時間制限</label>
+
       <select id="select-question-time">
         <option value="180">3分</option>
         <option value="300" selected>5分</option>
@@ -295,88 +330,297 @@
       </select>
 
       <label>議論フェイズの時間制限</label>
+
       <select id="select-discussion-time">
         <option value="120">2分</option>
         <option value="180" selected>3分</option>
         <option value="300">5分</option>
       </select>
-      
-      <button id="btn-start" onclick="startGame()">ゲームを開始する (3人〜8人)</button>
+
+      <button id="btn-start" onclick="startGame()">
+        ゲームを開始する (3人〜8人)
+      </button>
+
     </div>
   </div>
 
-  <!-- 役職確認画面（ゲーム開始前） -->
+  <!-- 役職確認画面 -->
   <div id="screen-confirm" style="display:none;">
+
     <div class="card" style="text-align: center;">
-      <div class="card-header" style="justify-content: center;">📜 あなたの役職と確認タイム</div>
-      <div style="font-size: 1.1rem; color: var(--text-muted);">あなたの役職:</div>
-      <div id="info-role" class="info-highlight" style="margin: 8px 0;">-</div>
 
-      <div id="info-word-box" style="display:none; margin-top: 20px; background: #111; padding: 16px; border-radius: 8px; border: 1px solid var(--gold-dark);">
-        <div style="font-size: 1.1rem; color: var(--gold-light); font-weight: bold;">秘密のお題</div>
-        <div id="info-word" class="word-highlight">-</div>
+      <div
+        class="card-header"
+        style="justify-content: center;"
+      >
+        📜 あなたの役職と確認タイム
       </div>
 
-      <div style="margin-top: 24px; font-size: 1.15rem; color: var(--gold-light);">
-        自動開始まで: <span id="confirm-timer" style="font-weight:bold; font-size:1.4rem;">20</span> 秒
+      <div style="font-size: 1.1rem; color: var(--text-muted);">
+        あなたの役職:
       </div>
+
+      <div
+        id="info-role"
+        class="info-highlight"
+        style="margin: 8px 0;"
+      >
+        -
+      </div>
+
+      <div
+        id="info-word-box"
+        style="
+          margin-top: 20px;
+          background: #111;
+          padding: 16px;
+          border-radius: 8px;
+          border: 1px solid var(--gold-dark);
+        "
+      >
+        <div
+          style="
+            font-size: 1.1rem;
+            color: var(--gold-light);
+            font-weight: bold;
+          "
+        >
+          秘密のお題
+        </div>
+
+        <div
+          id="info-word"
+          class="word-highlight"
+        >
+          -
+        </div>
+      </div>
+
+      <div
+        style="
+          margin-top: 24px;
+          font-size: 1.15rem;
+          color: var(--gold-light);
+        "
+      >
+        自動開始まで:
+        <span
+          id="confirm-timer"
+          style="font-weight:bold; font-size:1.4rem;"
+        >
+          20
+        </span>
+        秒
+      </div>
+
     </div>
   </div>
 
   <!-- 質問フェイズ -->
   <div id="screen-question" style="display:none;">
+
     <div class="sticky-role-box">
-      <div>役職: <span id="sticky-role" style="color:var(--gold-main); font-weight:bold;">-</span></div>
-      <div id="sticky-word-container">お題: <span id="sticky-word" style="color:var(--danger-color); font-weight:bold;">-</span></div>
+      <div>
+        役職:
+        <span
+          id="sticky-role"
+          style="color:var(--gold-main); font-weight:bold;"
+        >
+          -
+        </span>
+      </div>
+
+      <div>
+        お題:
+        <span
+          id="sticky-word"
+          style="color:var(--danger-color); font-weight:bold;"
+        >
+          -
+        </span>
+      </div>
     </div>
 
-    <div class="timer-display" id="question-timer">05:00</div>
-    <div style="text-align:center; color:var(--text-muted); font-size:1.1rem; margin-bottom:12px;">❓ 質問フェイズ（マスターにお題を質問してください）</div>
+    <div class="timer-display" id="question-timer">
+      05:00
+    </div>
+
+    <div
+      style="
+        text-align:center;
+        color:var(--text-muted);
+        font-size:1.1rem;
+        margin-bottom:12px;
+      "
+    >
+      ❓ 質問フェイズ（マスターにお題を質問してください）
+    </div>
 
     <div class="card">
-      <div class="card-header" style="color:var(--gold-main);">🗣️ 庶民・インサイダーは「はい/いいえ」で答えられる質問をしましょう</div>
-      <p style="font-size:1.05rem; line-height: 1.6; margin-top: 6px;">
+
+      <div
+        class="card-header"
+        style="color:var(--gold-main);"
+      >
+        🗣️ 庶民・インサイダーは「はい/いいえ」で答えられる質問をしましょう
+      </div>
+
+      <p
+        style="
+          font-size:1.05rem;
+          line-height:1.6;
+          margin-top:6px;
+        "
+      >
         正解（お題）に辿り着いたら、正解ボタンを押して議論へ進みます。
       </p>
-      <button onclick="requestCorrectAnswer()" style="background: linear-gradient(135deg, #27ae60 0%, #1e8449 100%); color: #fff; margin-top: 14px;">
+
+      <button
+        onclick="requestCorrectAnswer()"
+        style="
+          background:linear-gradient(135deg, #27ae60 0%, #1e8449 100%);
+          color:#fff;
+          margin-top:14px;
+        "
+      >
         🎯 正解が出たので投票・議論へ進む
       </button>
+
     </div>
   </div>
 
   <!-- 投票フェイズ -->
   <div id="screen-vote" style="display:none;">
+
     <div class="sticky-role-box">
-      <div>役職: <span id="sticky-role-v" style="color:var(--gold-main); font-weight:bold;">-</span></div>
-      <div id="sticky-word-container-v">お題: <span id="sticky-word-v" style="color:var(--danger-color); font-weight:bold;">-</span></div>
+
+      <div>
+        役職:
+        <span
+          id="sticky-role-v"
+          style="color:var(--gold-main); font-weight:bold;"
+        >
+          -
+        </span>
+      </div>
+
+      <div>
+        お題:
+        <span
+          id="sticky-word-v"
+          style="color:var(--danger-color); font-weight:bold;"
+        >
+          -
+        </span>
+      </div>
+
     </div>
 
-    <div class="timer-display" id="discussion-timer">03:00</div>
-    <div style="text-align:center; color:var(--text-muted); font-size:1.1rem; margin-bottom:12px;">🔍 議論＆投票フェイズ</div>
+    <div class="timer-display" id="discussion-timer">
+      03:00
+    </div>
+
+    <div
+      style="
+        text-align:center;
+        color:var(--text-muted);
+        font-size:1.1rem;
+        margin-bottom:12px;
+      "
+    >
+      🔍 議論＆投票フェイズ
+    </div>
 
     <div class="vote-progress-container">
-      <div style="font-size: 1.3rem; font-weight: bold; color: var(--gold-light);">🗳️ 投票状況: <span id="vote-count-display">0 / 0</span> 人完了</div>
-      <div id="vote-status-list" class="vote-status-list"></div>
+
+      <div
+        style="
+          font-size:1.3rem;
+          font-weight:bold;
+          color:var(--gold-light);
+        "
+      >
+        🗳️ 投票状況:
+        <span id="vote-count-display">
+          0 / 0
+        </span>
+        人完了
+      </div>
+
+      <div
+        id="vote-status-list"
+        class="vote-status-list"
+      ></div>
+
     </div>
 
     <div class="card">
-      <div class="card-header" style="color:var(--danger-color);">🗳️ インサイダーだと思うプレイヤーを1人選択</div>
-      <div id="vote-buttons" class="action-btn-group"></div>
+
+      <div
+        class="card-header"
+        style="color:var(--danger-color);"
+      >
+        🗳️ インサイダーだと思うプレイヤーを1人選択
+      </div>
+
+      <div
+        id="vote-buttons"
+        class="action-btn-group"
+      ></div>
+
     </div>
   </div>
 
   <!-- 結果画面 -->
   <div id="screen-result" style="display:none;">
-    <div class="card" style="text-align: center;">
-      <h2 id="result-winner-title" style="margin: 0; color: var(--gold-main); font-size: clamp(1.6rem, 5vw, 2.2rem);"></h2>
-      <p id="result-winner-sub" style="margin-top: 8px; font-size: 1.15rem; color: var(--text-muted);"></p>
+
+    <div class="card" style="text-align:center;">
+
+      <h2
+        id="result-winner-title"
+        style="
+          margin:0;
+          color:var(--gold-main);
+          font-size:clamp(1.6rem,5vw,2.2rem);
+        "
+      ></h2>
+
+      <p
+        id="result-winner-sub"
+        style="
+          margin-top:8px;
+          font-size:1.15rem;
+          color:var(--text-muted);
+        "
+      ></p>
+
     </div>
 
     <div class="card">
-      <div class="card-header">📋 全員の答え合わせ</div>
-      <div style="margin-bottom: 12px; font-size:1.15rem;">今回のお題: <span id="result-secret-word" class="word-highlight">-</span></div>
+
+      <div class="card-header">
+        📋 全員の答え合わせ
+      </div>
+
+      <div
+        style="
+          margin-bottom:12px;
+          font-size:1.15rem;
+        "
+      >
+        今回のお題:
+        <span
+          id="result-secret-word"
+          class="word-highlight"
+        >
+          -
+        </span>
+      </div>
+
       <div class="table-wrapper">
+
         <table class="result-table">
+
           <thead>
             <tr>
               <th>名前</th>
@@ -384,20 +628,45 @@
               <th>投票先</th>
             </tr>
           </thead>
+
           <tbody id="result-table-body"></tbody>
+
         </table>
+
       </div>
     </div>
 
     <div id="host-replay-panel" style="display:none;">
-      <button onclick="requestReplay()">🔄 もう一度遊ぶ（待機ルームへ戻る）</button>
+      <button onclick="requestReplay()">
+        🔄 もう一度遊ぶ（待機ルームへ戻る）
+      </button>
     </div>
+
   </div>
 
-  <div style="margin-top: 10px;">
-    <div style="font-size:0.9rem; color:var(--text-muted); margin-bottom:4px;">LOG</div>
-    <div class="log-container" id="log-box"></div>
-  </div></div><script>
+  <div style="margin-top:10px;">
+
+    <div
+      style="
+        font-size:0.9rem;
+        color:var(--text-muted);
+        margin-bottom:4px;
+      "
+    >
+      LOG
+    </div>
+
+    <div
+      class="log-container"
+      id="log-box"
+    ></div>
+
+  </div>
+
+</div>
+
+<script>
+
   const WORD_LIST = [
     "冷蔵庫", "電子レンジ", "洗濯機", "テレビ", "エアコン", "掃除機", "ドライヤー", "炊飯器", "扇風機", "空気清浄機",
     "ベッド", "ソファ", "テーブル", "カーテン", "鏡", "時計", "ゴミ箱", "傘", "ティッシュ", "ハンガー",
@@ -414,462 +683,1170 @@
 
   const PREFIX = "insider-game-v3-";
 
-  let peer = null, myId = "", myName = "", roomCode = "";
-  let isHost = false;
-  let connections = {}; 
-  let hostConn = null; 
+  let peer = null;
+  let myId = "";
+  let myName = "";
+  let roomCode = "";
 
-  let players = []; 
-  let myRole = "", secretWord = "";
-  let confirmTimerInterval = null, questionTimerInterval = null, discussionTimerInterval = null;
-  let questionDuration = 300, discussionDuration = 180;
+  let isHost = false;
+
+  let connections = {};
+  let hostConn = null;
+
+  let players = [];
+
+  let myRole = "";
+  let secretWord = "";
+
+  let confirmTimerInterval = null;
+  let questionTimerInterval = null;
+  let discussionTimerInterval = null;
+
+  let questionDuration = 300;
+  let discussionDuration = 180;
+
   let votes = {};
 
   function log(msg) {
     const box = document.getElementById("log-box");
+
     box.innerHTML += `<div>> ${msg}</div>`;
+
     box.scrollTop = box.scrollHeight;
   }
 
   function joinAsHost() {
-    myName = document.getElementById("input-name").value.trim() || "ホスト";
-    roomCode = document.getElementById("input-room-code").value.trim().toLowerCase();
-    if (!roomCode) return alert("合言葉（部屋名）を入力してください");
+
+    myName =
+      document.getElementById("input-name").value.trim()
+      || "ホスト";
+
+    roomCode =
+      document.getElementById("input-room-code").value.trim().toLowerCase();
+
+    if (!roomCode) {
+      return alert("合言葉（部屋名）を入力してください");
+    }
 
     isHost = true;
+
     const peerId = `${PREFIX}${roomCode}-host`;
+
     peer = new Peer(peerId);
 
-    peer.on('open', (id) => {
+    peer.on("open", (id) => {
+
       myId = id;
+
       setupLobbyUI();
-      players.push({ id: myId, name: myName });
+
+      players.push({
+        id: myId,
+        name: myName
+      });
+
       renderPlayers();
+
       log(`部屋を作成しました (部屋名: ${roomCode})`);
     });
 
-    peer.on('error', (err) => {
-      if (err.type === 'unavailable-id') alert("その部屋名は使われています。別の部屋名を入力してください。");
-      else alert("エラーが発生しました: " + err.type);
+    peer.on("error", (err) => {
+
+      if (err.type === "unavailable-id") {
+
+        alert(
+          "その部屋名は使われています。別の部屋名を入力してください。"
+        );
+
+      } else {
+
+        alert(
+          "エラーが発生しました: " + err.type
+        );
+
+      }
+
     });
 
-    peer.on('connection', (conn) => {
-      conn.on('open', () => {
-        conn.on('data', (data) => handleHostData(conn, data));
+    peer.on("connection", (conn) => {
+
+      conn.on("open", () => {
+
+        conn.on("data", (data) => {
+          handleHostData(conn, data);
+        });
+
       });
-      conn.on('close', () => {
-        players = players.filter(p => p.id !== conn.peer);
+
+      conn.on("close", () => {
+
+        players =
+          players.filter(
+            p => p.id !== conn.peer
+          );
+
         delete connections[conn.peer];
-        broadcast({ type: 'PLAYER_LIST', players });
+
+        broadcast({
+          type: "PLAYER_LIST",
+          players
+        });
+
         renderPlayers();
+
       });
+
     });
   }
 
   function joinAsGuest() {
-    myName = document.getElementById("input-name").value.trim() || "ゲスト";
-    roomCode = document.getElementById("input-room-code").value.trim().toLowerCase();
-    if (!roomCode) return alert("合言葉（部屋名）を入力してください");
+
+    myName =
+      document.getElementById("input-name").value.trim()
+      || "ゲスト";
+
+    roomCode =
+      document.getElementById("input-room-code").value.trim().toLowerCase();
+
+    if (!roomCode) {
+      return alert("合言葉（部屋名）を入力してください");
+    }
 
     isHost = false;
-    const hostPeerId = `${PREFIX}${roomCode}-host`;
+
+    const hostPeerId =
+      `${PREFIX}${roomCode}-host`;
+
     peer = new Peer();
 
-    peer.on('open', (id) => {
-      myId = id;
-      hostConn = peer.connect(hostPeerId);
+    peer.on("open", (id) => {
 
-      hostConn.on('open', () => {
+      myId = id;
+
+      hostConn =
+        peer.connect(hostPeerId);
+
+      hostConn.on("open", () => {
+
         setupLobbyUI();
-        hostConn.send({ type: 'JOIN', name: myName });
-        log(`部屋 [${roomCode}] に接続しました`);
+
+        hostConn.send({
+          type: "JOIN",
+          name: myName
+        });
+
+        log(
+          `部屋 [${roomCode}] に接続しました`
+        );
+
       });
 
-      hostConn.on('data', (data) => handleClientData(data));
+      hostConn.on("data", (data) => {
+        handleClientData(data);
+      });
+
     });
 
-    peer.on('error', () => {
-      alert("ホストに接続できませんでした。部屋名を確認してください。");
+    peer.on("error", () => {
+
+      alert(
+        "ホストに接続できませんでした。部屋名を確認してください。"
+      );
+
     });
   }
 
   function setupLobbyUI() {
+
     document.getElementById("screen-lobby").style.display = "none";
+
     document.getElementById("screen-room").style.display = "block";
+
     document.getElementById("screen-result").style.display = "none";
-    document.getElementById("room-name-display").innerText = roomCode;
-    if (isHost) document.getElementById("host-panel").style.display = "block";
+
+    document.getElementById("room-name-display").innerText =
+      roomCode;
+
+    if (isHost) {
+      document.getElementById("host-panel").style.display = "block";
+    }
   }
 
   function renderPlayers() {
-    const el = document.getElementById("player-list");
-    el.innerHTML = players.map(p => `<span class="player-badge">👤 ${p.name}</span>`).join("");
+
+    const el =
+      document.getElementById("player-list");
+
+    el.innerHTML =
+      players.map(
+        p => `<span class="player-badge">👤 ${p.name}</span>`
+      ).join("");
+
     if (isHost) {
-      document.getElementById("btn-start").disabled = players.length < 3;
+
+      document.getElementById("btn-start").disabled =
+        players.length < 3;
+
     }
   }
 
   function broadcast(data) {
-    Object.values(connections).forEach(c => c.send(data));
+
+    Object.values(connections).forEach(c => {
+      c.send(data);
+    });
+
     handleClientData(data);
   }
 
   function handleHostData(conn, data) {
-    if (data.type === 'JOIN') {
+
+    if (data.type === "JOIN") {
+
       connections[conn.peer] = conn;
-      players.push({ id: conn.peer, name: data.name });
-      broadcast({ type: 'PLAYER_LIST', players });
+
+      players.push({
+        id: conn.peer,
+        name: data.name
+      });
+
+      broadcast({
+        type: "PLAYER_LIST",
+        players
+      });
+
       renderPlayers();
-    } else if (data.type === 'VOTE') {
-      handleVote(conn.peer, data.targetId);
-    } else if (data.type === 'CORRECT_ANSWER') {
-      triggerDiscussionPhase();
+
     }
+
+    else if (data.type === "VOTE") {
+
+      handleVote(
+        conn.peer,
+        data.targetId
+      );
+
+    }
+
+    else if (data.type === "CORRECT_ANSWER") {
+
+      triggerDiscussionPhase();
+
+    }
+
   }
 
   function shuffle(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
+
+    for (
+      let i = array.length - 1;
+      i > 0;
+      i--
+    ) {
+
+      const j =
+        Math.floor(Math.random() * (i + 1));
+
+      [
+        array[i],
+        array[j]
+      ] = [
+        array[j],
+        array[i]
+      ];
+
     }
+
     return array;
   }
 
+  /*
+   * ==========================================================
+   * 修正箇所
+   * ==========================================================
+   *
+   * ホストがマスターである必要はありません。
+   *
+   * players の中から完全にランダムで
+   * マスター・インサイダーを決定し、
+   * それぞれ本人にだけ必要な情報を送ります。
+   *
+   * マスターがゲストの場合でも、
+   * role === "マスター" なら secretWord を送ります。
+   */
+
   function startGame() {
-    if (players.length < 3) return;
+
+    if (players.length < 3) {
+      return;
+    }
+
     votes = {};
 
-    questionDuration = parseInt(document.getElementById("select-question-time").value, 10);
-    discussionDuration = parseInt(document.getElementById("select-discussion-time").value, 10);
+    questionDuration =
+      parseInt(
+        document.getElementById("select-question-time").value,
+        10
+      );
 
-    secretWord = WORD_LIST[Math.floor(Math.random() * WORD_LIST.length)];
+    discussionDuration =
+      parseInt(
+        document.getElementById("select-discussion-time").value,
+        10
+      );
 
-    let shuffled = shuffle([...players]);
-    const masterId = shuffled[0].id;
-    const insiderId = shuffled[1].id;
+    // お題を決定
+    secretWord =
+      WORD_LIST[
+        Math.floor(
+          Math.random() * WORD_LIST.length
+        )
+      ];
 
-    players.forEach(p => {
-      let role = "庶民";
-      if (p.id === masterId) role = "マスター";
-      else if (p.id === insiderId) role = "インサイダー";
+    // プレイヤーをシャッフル
+    const shuffled =
+      shuffle([...players]);
 
-      p.role = role;
+    // 役職をランダム決定
+    const masterId =
+      shuffled[0].id;
 
-      const isKnowsWord = (role === 'マスター' || role === 'インサイダー');
+    const insiderId =
+      shuffled[1].id;
+
+    // 全プレイヤーの役職を設定
+    players.forEach(player => {
+
+      if (player.id === masterId) {
+
+        player.role = "マスター";
+
+      }
+
+      else if (player.id === insiderId) {
+
+        player.role = "インサイダー";
+
+      }
+
+      else {
+
+        player.role = "庶民";
+
+      }
+
+    });
+
+    /*
+     * プレイヤーごとに個別のGAME_STARTを送信
+     *
+     * マスター     → お題を表示
+     * インサイダー → お題を表示
+     * 庶民         → 非公開
+     *
+     * ホストかゲストかは一切関係なし。
+     */
+    players.forEach(player => {
+
+      const role =
+        player.role;
+
+      const wordForPlayer =
+        (
+          role === "マスター" ||
+          role === "インサイダー"
+        )
+          ? secretWord
+          : "??? (非公開)";
 
       const payload = {
-        type: 'GAME_START',
+
+        type: "GAME_START",
+
         role: role,
-        word: isKnowsWord ? secretWord : "???",
+
+        word: wordForPlayer,
+
         questionTime: questionDuration,
+
         discussionTime: discussionDuration
+
       };
 
-      if (p.id === myId) {
-        setupConfirmScreen(payload);
-      } else {
-        connections[p.id].send(payload);
+      // ホスト本人の場合
+      if (player.id === myId) {
+
+        handleClientData(payload);
+
       }
+
+      // ゲストの場合
+      else {
+
+        const conn =
+          connections[player.id];
+
+        if (conn) {
+
+          conn.send(payload);
+
+        }
+
+      }
+
     });
   }
 
+  /*
+   * ==========================================================
+   * 修正箇所
+   * ==========================================================
+   *
+   * 受信した役職を基準にお題を表示。
+   *
+   * 「ホストだから」「ゲストだから」ではなく、
+   * 「マスターかインサイダーか」で判断します。
+   */
+
   function setupConfirmScreen(data) {
+
     myRole = data.role;
-    secretWord = data.word;
+
+    // マスター・インサイダーならお題を受け取る
+    if (
+      myRole === "マスター" ||
+      myRole === "インサイダー"
+    ) {
+
+      secretWord = data.word;
+
+    }
+
+    // 庶民なら非公開
+    else {
+
+      secretWord = "??? (非公開)";
+
+    }
 
     document.getElementById("screen-room").style.display = "none";
+
     document.getElementById("screen-confirm").style.display = "block";
+
     document.getElementById("screen-question").style.display = "none";
+
     document.getElementById("screen-vote").style.display = "none";
+
     document.getElementById("screen-result").style.display = "none";
 
-    document.getElementById("info-role").innerText = myRole;
+    // 役職表示
+    document.getElementById("info-role").innerText =
+      myRole;
 
-    const wordEl = document.getElementById("info-word");
-    const wordBox = document.getElementById("info-word-box");
+    // お題表示
+    const wordEl =
+      document.getElementById("info-word");
 
-    if (myRole === "マスター" || myRole === "インサイダー") {
-      wordBox.style.display = "block";
-      wordEl.innerText = secretWord;
-      wordEl.style.color = "var(--danger-color)";
-    } else {
-      wordBox.style.display = "none";
+    wordEl.innerText =
+      secretWord;
+
+    if (
+      myRole === "マスター" ||
+      myRole === "インサイダー"
+    ) {
+
+      wordEl.style.color =
+        "var(--danger-color)";
+
     }
 
-    // 上部ヘッダー（Stickyバー）の制御
-    document.getElementById("sticky-role").innerText = myRole;
-    document.getElementById("sticky-role-v").innerText = myRole;
+    else {
 
-    const stickyWordEl = document.getElementById("sticky-word");
-    const stickyWordElV = document.getElementById("sticky-word-v");
-    const stickyWordContainer = document.getElementById("sticky-word-container");
-    const stickyWordContainerV = document.getElementById("sticky-word-container-v");
+      wordEl.style.color =
+        "var(--text-muted)";
 
-    if (myRole === "マスター" || myRole === "インサイダー") {
-      stickyWordContainer.style.display = "block";
-      stickyWordContainerV.style.display = "block";
-      stickyWordEl.innerText = secretWord;
-      stickyWordElV.innerText = secretWord;
-    } else {
-      stickyWordContainer.style.display = "none";
-      stickyWordContainerV.style.display = "none";
     }
 
+    // 上部ヘッダー
+    document.getElementById("sticky-role").innerText =
+      myRole;
+
+    document.getElementById("sticky-word").innerText =
+      secretWord;
+
+    document.getElementById("sticky-role-v").innerText =
+      myRole;
+
+    document.getElementById("sticky-word-v").innerText =
+      secretWord;
+
+    // 確認タイマー
     let confirmRemaining = 20;
-    document.getElementById("confirm-timer").innerText = confirmRemaining;
+
+    document.getElementById("confirm-timer").innerText =
+      confirmRemaining;
 
     clearInterval(confirmTimerInterval);
-    confirmTimerInterval = setInterval(() => {
-      confirmRemaining--;
-      document.getElementById("confirm-timer").innerText = confirmRemaining;
-      if (confirmRemaining <= 0) {
-        clearInterval(confirmTimerInterval);
-        if (isHost) {
-          startQuestionPhase();
+
+    confirmTimerInterval =
+      setInterval(() => {
+
+        confirmRemaining--;
+
+        document.getElementById("confirm-timer").innerText =
+          confirmRemaining;
+
+        if (confirmRemaining <= 0) {
+
+          clearInterval(confirmTimerInterval);
+
+          // ホストは進行役。
+          // マスターである必要はない。
+          if (isHost) {
+
+            startQuestionPhase();
+
+          }
+
         }
-      }
-    }, 1000);
+
+      }, 1000);
   }
 
   function startQuestionPhase() {
-    broadcast({ type: 'START_QUESTION' });
 
-    let remaining = questionDuration;
-    broadcast({ type: 'QUESTION_TIMER_SYNC', time: remaining });
+    broadcast({
+      type: "START_QUESTION"
+    });
+
+    let remaining =
+      questionDuration;
+
+    broadcast({
+      type: "QUESTION_TIMER_SYNC",
+      time: remaining
+    });
 
     clearInterval(questionTimerInterval);
-    questionTimerInterval = setInterval(() => {
-      remaining--;
-      broadcast({ type: 'QUESTION_TIMER_SYNC', time: remaining });
-      if (remaining <= 0) {
-        clearInterval(questionTimerInterval);
-        triggerTimeOutResult();
-      }
-    }, 1000);
+
+    questionTimerInterval =
+      setInterval(() => {
+
+        remaining--;
+
+        broadcast({
+          type: "QUESTION_TIMER_SYNC",
+          time: remaining
+        });
+
+        if (remaining <= 0) {
+
+          clearInterval(questionTimerInterval);
+
+          triggerTimeOutResult();
+
+        }
+
+      }, 1000);
   }
 
   function triggerDiscussionPhase() {
-    clearInterval(questionTimerInterval);
-    broadcast({ type: 'START_DISCUSSION' });
 
-    let remaining = discussionDuration;
-    broadcast({ type: 'DISCUSSION_TIMER_SYNC', time: remaining });
+    clearInterval(
+      questionTimerInterval
+    );
 
-    clearInterval(discussionTimerInterval);
-    discussionTimerInterval = setInterval(() => {
-      remaining--;
-      broadcast({ type: 'DISCUSSION_TIMER_SYNC', time: remaining });
-      if (remaining <= 0) {
-        clearInterval(discussionTimerInterval);
-      }
-    }, 1000);
+    broadcast({
+      type: "START_DISCUSSION"
+    });
+
+    let remaining =
+      discussionDuration;
+
+    broadcast({
+      type: "DISCUSSION_TIMER_SYNC",
+      time: remaining
+    });
+
+    clearInterval(
+      discussionTimerInterval
+    );
+
+    discussionTimerInterval =
+      setInterval(() => {
+
+        remaining--;
+
+        broadcast({
+          type: "DISCUSSION_TIMER_SYNC",
+          time: remaining
+        });
+
+        if (remaining <= 0) {
+
+          clearInterval(
+            discussionTimerInterval
+          );
+
+        }
+
+      }, 1000);
   }
 
   function requestCorrectAnswer() {
+
     if (isHost) {
+
       triggerDiscussionPhase();
-    } else {
-      hostConn.send({ type: 'CORRECT_ANSWER' });
+
+    }
+
+    else {
+
+      hostConn.send({
+        type: "CORRECT_ANSWER"
+      });
+
     }
   }
 
   function formatTime(seconds) {
-    const m = Math.floor(seconds / 60).toString().padStart(2, '0');
-    const s = (seconds % 60).toString().padStart(2, '0');
+
+    const m =
+      Math.floor(seconds / 60)
+        .toString()
+        .padStart(2, "0");
+
+    const s =
+      (seconds % 60)
+        .toString()
+        .padStart(2, "0");
+
     return `${m}:${s}`;
   }
 
   function handleClientData(data) {
-    if (data.type === 'PLAYER_LIST') {
-      players = data.players;
+
+    if (data.type === "PLAYER_LIST") {
+
+      players =
+        data.players;
+
       renderPlayers();
-    } else if (data.type === 'GAME_START') {
+
+    }
+
+    else if (data.type === "GAME_START") {
+
       setupConfirmScreen(data);
-    } else if (data.type === 'START_QUESTION') {
-      clearInterval(confirmTimerInterval);
-      document.getElementById("screen-confirm").style.display = "none";
-      document.getElementById("screen-question").style.display = "block";
-    } else if (data.type === 'QUESTION_TIMER_SYNC') {
-      document.getElementById("question-timer").innerText = formatTime(data.time);
-    } else if (data.type === 'START_DISCUSSION') {
+
+    }
+
+    else if (data.type === "START_QUESTION") {
+
+      clearInterval(
+        confirmTimerInterval
+      );
+
+      document.getElementById("screen-confirm").style.display =
+        "none";
+
+      document.getElementById("screen-question").style.display =
+        "block";
+
+    }
+
+    else if (data.type === "QUESTION_TIMER_SYNC") {
+
+      document.getElementById("question-timer").innerText =
+        formatTime(data.time);
+
+    }
+
+    else if (data.type === "START_DISCUSSION") {
+
       startVoteScreen();
-    } else if (data.type === 'DISCUSSION_TIMER_SYNC') {
-      document.getElementById("discussion-timer").innerText = formatTime(data.time);
-    } else if (data.type === 'VOTE_PROGRESS') {
-      updateVoteProgressUI(data.votedCount, data.totalCount, data.votedPlayerIds);
-    } else if (data.type === 'SHOW_RESULT') {
+
+    }
+
+    else if (data.type === "DISCUSSION_TIMER_SYNC") {
+
+      document.getElementById("discussion-timer").innerText =
+        formatTime(data.time);
+
+    }
+
+    else if (data.type === "VOTE_PROGRESS") {
+
+      updateVoteProgressUI(
+        data.votedCount,
+        data.totalCount,
+        data.votedPlayerIds
+      );
+
+    }
+
+    else if (data.type === "SHOW_RESULT") {
+
       showResultScreen(data);
-    } else if (data.type === 'RETURN_TO_ROOM') {
+
+    }
+
+    else if (data.type === "RETURN_TO_ROOM") {
+
       returnToRoom();
+
     }
   }
 
   function startVoteScreen() {
-    document.getElementById("screen-question").style.display = "none";
-    document.getElementById("screen-vote").style.display = "block";
 
-    updateVoteProgressUI(0, players.length, []);
+    document.getElementById("screen-question").style.display =
+      "none";
 
-    const voteBox = document.getElementById("vote-buttons");
+    document.getElementById("screen-vote").style.display =
+      "block";
+
+    updateVoteProgressUI(
+      0,
+      players.length,
+      []
+    );
+
+    const voteBox =
+      document.getElementById("vote-buttons");
+
     voteBox.innerHTML = "";
+
     players.forEach(p => {
+
       if (p.id !== myId) {
-        const btn = document.createElement("button");
-        btn.innerText = `🗳️ 「${p.name}」 に投票`;
-        btn.onclick = () => castVote(p.id);
+
+        const btn =
+          document.createElement("button");
+
+        btn.innerText =
+          `🗳️ 「${p.name}」 に投票`;
+
+        btn.onclick =
+          () => castVote(p.id);
+
         voteBox.appendChild(btn);
+
       }
+
     });
   }
 
   function castVote(targetId) {
-    document.getElementById("vote-buttons").innerHTML = "<p style='color:var(--gold-light); font-size:1.2rem; text-align:center;'>投票完了。全員の投票を待っています...</p>";
-    if (isHost) handleVote(myId, targetId);
-    else hostConn.send({ type: 'VOTE', targetId });
-  }
 
-  function handleVote(fromId, targetId) {
-    votes[fromId] = targetId;
-    const votedCount = Object.keys(votes).length;
-    const totalCount = players.length;
-    const votedPlayerIds = Object.keys(votes);
+    document.getElementById("vote-buttons").innerHTML =
+      "<p style='color:var(--gold-light); font-size:1.2rem; text-align:center;'>投票完了。全員の投票を待っています...</p>";
 
-    broadcast({
-      type: 'VOTE_PROGRESS',
-      votedCount: votedCount,
-      totalCount: totalCount,
-      votedPlayerIds: votedPlayerIds
-    });
+    if (isHost) {
 
-    if (votedCount === totalCount) {
-      const counts = {};
-      Object.values(votes).forEach(t => counts[t] = (counts[t] || 0) + 1);
+      handleVote(
+        myId,
+        targetId
+      );
 
-      let maxCnt = 0;
-      Object.values(counts).forEach(cnt => {
-        if (cnt > maxCnt) maxCnt = cnt;
+    }
+
+    else {
+
+      hostConn.send({
+        type: "VOTE",
+        targetId: targetId
       });
 
-      const topVotedIds = Object.keys(counts).filter(id => counts[id] === maxCnt);
-      const insider = players.find(p => p.role === 'インサイダー');
-
-      const isSuccess = topVotedIds.includes(insider.id);
-
-      const finalPlayersResult = players.map(p => {
-        const votedTargetId = votes[p.id];
-        const votedTarget = players.find(x => x.id === votedTargetId);
-        return {
-          ...p,
-          votedToId: votedTargetId,
-          votedToName: votedTarget ? votedTarget.name : "未投票"
-        };
-      });
-
-      const resultPayload = {
-        type: 'SHOW_RESULT',
-        isTimeout: false,
-        isSuccess: isSuccess,
-        insiderId: insider.id,
-        insiderName: insider.name,
-        secretWord: secretWord,
-        allPlayersResult: finalPlayersResult
-      };
-
-      broadcast(resultPayload);
     }
   }
 
-  function updateVoteProgressUI(votedCount, totalCount, votedPlayerIds) {
-    document.getElementById("vote-count-display").innerText = `${votedCount} / ${totalCount}`;
+  function handleVote(fromId, targetId) {
 
-    const listEl = document.getElementById("vote-status-list");
-    listEl.innerHTML = players.map(p => {
-      const hasVoted = votedPlayerIds.includes(p.id);
-      const statusText = hasVoted ? "✓ 投票済み" : "投票中...";
-      const badgeClass = hasVoted ? "status-badge done" : "status-badge";
-      return `<span class="${badgeClass}">${p.name}: ${statusText}</span>`;
-    }).join("");
+    votes[fromId] =
+      targetId;
+
+    const votedCount =
+      Object.keys(votes).length;
+
+    const totalCount =
+      players.length;
+
+    const votedPlayerIds =
+      Object.keys(votes);
+
+    broadcast({
+
+      type: "VOTE_PROGRESS",
+
+      votedCount:
+        votedCount,
+
+      totalCount:
+        totalCount,
+
+      votedPlayerIds:
+        votedPlayerIds
+
+    });
+
+    if (votedCount === totalCount) {
+
+      const counts = {};
+
+      Object.values(votes).forEach(t => {
+
+        counts[t] =
+          (counts[t] || 0) + 1;
+
+      });
+
+      let maxCnt = 0;
+
+      Object.values(counts).forEach(cnt => {
+
+        if (cnt > maxCnt) {
+
+          maxCnt = cnt;
+
+        }
+
+      });
+
+      const topVotedIds =
+        Object.keys(counts)
+          .filter(
+            id => counts[id] === maxCnt
+          );
+
+      const insider =
+        players.find(
+          p => p.role === "インサイダー"
+        );
+
+      const isSuccess =
+        topVotedIds.includes(
+          insider.id
+        );
+
+      const finalPlayersResult =
+        players.map(p => {
+
+          const votedTargetId =
+            votes[p.id];
+
+          const votedTarget =
+            players.find(
+              x => x.id === votedTargetId
+            );
+
+          return {
+
+            ...p,
+
+            votedToId:
+              votedTargetId,
+
+            votedToName:
+              votedTarget
+                ? votedTarget.name
+                : "未投票"
+
+          };
+
+        });
+
+      const resultPayload = {
+
+        type: "SHOW_RESULT",
+
+        isTimeout: false,
+
+        isSuccess: isSuccess,
+
+        insiderId:
+          insider.id,
+
+        insiderName:
+          insider.name,
+
+        secretWord:
+          secretWord,
+
+        allPlayersResult:
+          finalPlayersResult
+
+      };
+
+      broadcast(
+        resultPayload
+      );
+    }
+  }
+
+  function updateVoteProgressUI(
+    votedCount,
+    totalCount,
+    votedPlayerIds
+  ) {
+
+    document.getElementById("vote-count-display").innerText =
+      `${votedCount} / ${totalCount}`;
+
+    const listEl =
+      document.getElementById("vote-status-list");
+
+    listEl.innerHTML =
+      players.map(p => {
+
+        const hasVoted =
+          votedPlayerIds.includes(
+            p.id
+          );
+
+        const statusText =
+          hasVoted
+            ? "✓ 投票済み"
+            : "投票中...";
+
+        const badgeClass =
+          hasVoted
+            ? "status-badge done"
+            : "status-badge";
+
+        return `
+          <span class="${badgeClass}">
+            ${p.name}: ${statusText}
+          </span>
+        `;
+
+      }).join("");
   }
 
   function triggerTimeOutResult() {
-    const insider = players.find(p => p.role === 'インサイダー');
-    const finalPlayersResult = players.map(p => ({
-      ...p,
-      votedToId: null,
-      votedToName: "時間切れのため未投票"
-    }));
+
+    const insider =
+      players.find(
+        p => p.role === "インサイダー"
+      );
+
+    const finalPlayersResult =
+      players.map(p => ({
+
+        ...p,
+
+        votedToId: null,
+
+        votedToName:
+          "時間切れのため未投票"
+
+      }));
 
     broadcast({
-      type: 'SHOW_RESULT',
+
+      type: "SHOW_RESULT",
+
       isTimeout: true,
+
       isSuccess: false,
-      insiderId: insider.id,
-      insiderName: insider.name,
-      secretWord: secretWord,
-      allPlayersResult: finalPlayersResult
+
+      insiderId:
+        insider.id,
+
+      insiderName:
+        insider.name,
+
+      secretWord:
+        secretWord,
+
+      allPlayersResult:
+        finalPlayersResult
+
     });
   }
 
   function showResultScreen(data) {
-    clearInterval(questionTimerInterval);
-    clearInterval(discussionTimerInterval);
 
-    document.getElementById("screen-vote").style.display = "none";
-    document.getElementById("screen-question").style.display = "none";
-    document.getElementById("screen-result").style.display = "block";
+    clearInterval(
+      questionTimerInterval
+    );
 
-    const titleEl = document.getElementById("result-winner-title");
-    const subEl = document.getElementById("result-winner-sub");
-    document.getElementById("result-secret-word").innerText = data.secretWord;
+    clearInterval(
+      discussionTimerInterval
+    );
+
+    document.getElementById("screen-vote").style.display =
+      "none";
+
+    document.getElementById("screen-question").style.display =
+      "none";
+
+    document.getElementById("screen-result").style.display =
+      "block";
+
+    const titleEl =
+      document.getElementById(
+        "result-winner-title"
+      );
+
+    const subEl =
+      document.getElementById(
+        "result-winner-sub"
+      );
+
+    document.getElementById(
+      "result-secret-word"
+    ).innerText =
+      data.secretWord;
 
     if (data.isTimeout) {
-      titleEl.innerText = "💀 全員の敗北...";
-      titleEl.style.color = "var(--danger-color)";
-      subEl.innerText = `時間内にお題に辿り着けませんでした。（インサイダー: 「${data.insiderName}」）`;
-    } else if (data.isSuccess) {
-      titleEl.innerText = "🎉 庶民・マスター陣営の勝利！";
-      titleEl.style.color = "var(--success-color)";
-      subEl.innerText = `見事にインサイダー（「${data.insiderName}」）を見破り追放しました！`;
-    } else {
-      titleEl.innerText = "🕵️ インサイダーの勝利！";
-      titleEl.style.color = "var(--danger-color)";
-      subEl.innerText = `追放失敗... インサイダー（「${data.insiderName}」）は潜伏に成功しました！`;
+
+      titleEl.innerText =
+        "💀 全員の敗北...";
+
+      titleEl.style.color =
+        "var(--danger-color)";
+
+      subEl.innerText =
+        `時間内にお題に辿り着けませんでした。（インサイダー: 「${data.insiderName}」）`;
+
     }
 
-    const tbody = document.getElementById("result-table-body");
-    tbody.innerHTML = data.allPlayersResult.map(p => {
-      let roleColor = 'var(--text-color)';
-      if (p.role === 'インサイダー') roleColor = 'var(--danger-color)';
-      if (p.role === 'マスター') roleColor = 'var(--gold-main)';
+    else if (data.isSuccess) {
 
-      return `
-        <tr>
-          <td><strong>「${p.name}」</strong></td>
-          <td style="color:${roleColor}; font-weight:bold;">${p.role}</td>
-          <td>👉 「${p.votedToName}」</td>
-        </tr>
-      `;
-    }).join("");
+      titleEl.innerText =
+        "🎉 庶民・マスター陣営の勝利！";
+
+      titleEl.style.color =
+        "var(--success-color)";
+
+      subEl.innerText =
+        `見事にインサイダー（「${data.insiderName}」）を見破り追放しました！`;
+
+    }
+
+    else {
+
+      titleEl.innerText =
+        "🕵️ インサイダーの勝利！";
+
+      titleEl.style.color =
+        "var(--danger-color)";
+
+      subEl.innerText =
+        `追放失敗... インサイダー（「${data.insiderName}」）は潜伏に成功しました！`;
+
+    }
+
+    const tbody =
+      document.getElementById(
+        "result-table-body"
+      );
+
+    tbody.innerHTML =
+      data.allPlayersResult
+        .map(p => {
+
+          let roleColor =
+            "var(--text-color)";
+
+          if (
+            p.role === "インサイダー"
+          ) {
+
+            roleColor =
+              "var(--danger-color)";
+
+          }
+
+          if (
+            p.role === "マスター"
+          ) {
+
+            roleColor =
+              "var(--gold-main)";
+
+          }
+
+          return `
+            <tr>
+              <td>
+                <strong>「${p.name}」</strong>
+              </td>
+
+              <td
+                style="
+                  color:${roleColor};
+                  font-weight:bold;
+                "
+              >
+                ${p.role}
+              </td>
+
+              <td>
+                👉 「${p.votedToName}」
+              </td>
+            </tr>
+          `;
+
+        })
+        .join("");
 
     if (isHost) {
-      document.getElementById("host-replay-panel").style.display = "block";
-    } else {
-      document.getElementById("host-replay-panel").style.display = "none";
+
+      document.getElementById(
+        "host-replay-panel"
+      ).style.display =
+        "block";
+
+    }
+
+    else {
+
+      document.getElementById(
+        "host-replay-panel"
+      ).style.display =
+        "none";
+
     }
   }
 
   function requestReplay() {
+
     if (isHost) {
-      broadcast({ type: 'RETURN_TO_ROOM' });
+
+      broadcast({
+        type: "RETURN_TO_ROOM"
+      });
+
     }
   }
 
   function returnToRoom() {
+
     myRole = "";
+
     secretWord = "";
+
     votes = {};
 
-    document.getElementById("screen-result").style.display = "none";
-    document.getElementById("screen-room").style.display = "block";
-    log("待機ルームに戻りました。");
-  }</script></body></html>
+    document.getElementById(
+      "screen-result"
+    ).style.display =
+      "none";
+
+    document.getElementById(
+      "screen-room"
+    ).style.display =
+      "block";
+
+    log(
+      "待機ルームに戻りました。"
+    );
+  }
+
+</script>
+
+</body>
+</html>
